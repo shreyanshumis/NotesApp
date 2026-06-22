@@ -1,8 +1,9 @@
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+import os
 
-SECRET_KEY = "django-insecure-change-me-before-production"
+SECRET_KEY = os.environ.get("SECRET_KEY","django-insecure-local-dev-key")
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
