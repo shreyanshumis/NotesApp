@@ -1,22 +1,150 @@
 {% extends "base.html" %}
 
+{% block title %}
+{% if object %}Edit Note{% else %}New Note{% endif %} — Scribe
+{% endblock %}
+
 {% block content %}
-<div class="container">
-    <h1>
+
+<style>
+.journal-form-page{
+    max-width:900px;
+    margin:0 auto;
+    padding:3rem 0 5rem;
+}
+
+.form-eyebrow{
+    color:#B89B5E;
+    letter-spacing:.18em;
+    font-size:.75rem;
+    text-transform:uppercase;
+    font-weight:600;
+    margin-bottom:1rem;
+}
+
+.form-title{
+    font-family:"Playfair Display",serif;
+    font-size:4rem;
+    font-style:italic;
+    color:#F5F0EA;
+    line-height:1;
+    margin-bottom:.75rem;
+}
+
+.form-subtitle{
+    font-family:"Playfair Display",serif;
+    font-style:italic;
+    color:#B5AAA5;
+    font-size:1.35rem;
+    margin-bottom:2.5rem;
+}
+
+.form-card{
+    background:rgba(255,255,255,.02);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:28px;
+    padding:2rem;
+    backdrop-filter:blur(8px);
+}
+
+.form-group{
+    margin-bottom:1.75rem;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:.75rem;
+    color:#F5F0EA;
+    font-weight:600;
+}
+
+.form-group input,
+.form-group textarea{
+    width:100%;
+    background:#1F1C1C;
+    border:1px solid #393434;
+    color:#F5F0EA;
+    border-radius:18px;
+    padding:1rem 1.25rem;
+    font-family:Inter,sans-serif;
+    transition:all .25s ease;
+}
+
+.form-group input{
+    height:60px;
+    font-size:1.1rem;
+}
+
+.form-group textarea{
+    min-height:400px;
+    resize:vertical;
+    line-height:1.8;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+    outline:none;
+    border-color:#B9A1E3;
+    box-shadow:0 0 0 4px rgba(185,161,227,.15);
+}
+
+.save-btn{
+    background:#B9A1E3;
+    color:white;
+    border:none;
+    border-radius:14px;
+    padding:14px 28px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .25s ease;
+}
+
+.save-btn:hover{
+    background:#CBB5F2;
+    transform:translateY(-2px);
+}
+</style>
+
+<section class="journal-form-page">
+
+    <div class="form-eyebrow">
+        YOUR PRIVATE COLLECTION
+    </div>
+
+    <h1 class="form-title">
         {% if object %}
-            Edit Note
+            Edit your note
         {% else %}
-            Create Note
+            Write a new note
         {% endif %}
     </h1>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+    <p class="form-subtitle">
+        A quiet place for the things worth keeping.
+    </p>
 
-        <button type="submit">
+    <form method="post" class="form-card">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}">
+                Title
+            </label>
+            {{ form.title }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.content.id_for_label }}">
+                Content
+            </label>
+            {{ form.content }}
+        </div>
+
+        <button type="submit" class="save-btn">
             Save Note
         </button>
     </form>
-</div>
+
+</section>
+
 {% endblock %}
