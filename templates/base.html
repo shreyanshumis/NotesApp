@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A quiet place for your notes.">
+  <title>{% block title %}Scribe — Private Journal{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/atmosphere.css' %}?v=2">
+</head>
+<body>
+  <div class="orbital-atmosphere" aria-hidden="true">
+    <span class="orbital-core"></span>
+    <span class="orbit orbit-one"><i></i></span>
+    <span class="orbit orbit-two"><i></i></span>
+    <span class="orbit orbit-three"><i></i></span>
+  </div>
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Main navigation">
+      <a class="brand" href="{% url 'notes:list' %}" aria-label="Scribe home"><span class="brand-mark" aria-hidden="true"></span> Scribe</a>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+        <a class="button button-small" href="{% url 'notes:create' %}">New note <span aria-hidden="true">＋</span></a>
+      </div>
+    </nav>
+  </header>
+  <main class="container page-content">
+    {% if messages %}
+      {% for message in messages %}<div class="message {{ message.tags }}" role="status">{{ message }}</div>{% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer"><span>Made for unhurried thoughts</span><span aria-hidden="true">·</span><span>Private by design</span></footer>
+  <div class="cursor-blob" aria-hidden="true"></div>
+  <script src="{% static 'js/theme.js' %}?v=2"></script>
+  <script src="{% static 'js/share.js' %}?v=1"></script>
+</body>
+</html>

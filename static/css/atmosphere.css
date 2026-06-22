@@ -1,0 +1,25 @@
+/* A quiet celestial layer: visible enough to enrich the page, never enough to compete with a note. */
+:root { --ambient:#eee9e5; --ambient-line:#ded5cf; }
+:root[data-theme="dark"] { --ambient:#1b1818; --ambient-line:#302b2b; }
+
+.site-header,.page-content,.site-footer { position:relative; z-index:1; }
+.orbital-atmosphere { position:fixed; z-index:0; top:145px; right:max(2.5vw, 24px); width:270px; height:270px; pointer-events:none; opacity:.72; }
+.orbital-atmosphere::before { content:""; position:absolute; inset:28px; border-radius:50%; background:var(--ambient); filter:blur(.2px); }
+.orbital-core { position:absolute; z-index:2; top:calc(50% - 11px); left:calc(50% - 11px); width:22px; height:22px; border:5px solid var(--gold); border-radius:50%; background:var(--ambient); box-shadow:0 0 0 8px color-mix(in srgb, var(--ambient) 82%, transparent); }
+.orbit { position:absolute; top:calc(50% - 57px); left:calc(50% - 115px); width:230px; height:114px; border:1px solid var(--ambient-line); border-radius:50%; animation:orbit-spin 15s linear infinite; }
+.orbit-two { transform:rotate(60deg); animation-duration:19s; animation-direction:reverse; }
+.orbit-three { transform:rotate(120deg); animation-duration:23s; }
+.orbit i { position:absolute; display:block; top:-4px; left:50%; width:9px; height:9px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px color-mix(in srgb, var(--ambient) 80%, transparent); }
+.orbit-two i { width:7px; height:7px; background:var(--gold); }.orbit-three i { width:6px; height:6px; background:var(--muted); }
+@keyframes orbit-spin { from { transform:rotate(var(--orbit-angle, 0deg)); } to { transform:rotate(calc(var(--orbit-angle, 0deg) + 360deg)); } }
+.orbit-two { --orbit-angle:60deg; }.orbit-three { --orbit-angle:120deg; }
+
+.brand-mark { display:inline-block; width:13px; height:13px; margin:0 7px 0 1px; border:2px solid var(--gold); border-radius:50%; vertical-align:1px; position:relative; }.brand-mark::after { content:""; position:absolute; top:3px; left:3px; width:3px; height:3px; border-radius:50%; background:var(--gold); }
+.brand,.journal-intro h1,.page-heading h1,.detail-header h1,.confirm-shell h1,.note-card h2 { font-family:'Playfair Display',serif; font-style:italic; }.journal-intro .muted,.empty-state p,.confirm-shell>p:not(.eyebrow),.note-preview { font-family:'Playfair Display',serif; font-style:italic; font-size:1.08rem; }.note-detail .detail-content > p:first-child::first-letter { font-family:'Playfair Display',serif; font-size:2.7em; font-style:italic; line-height:.75; float:left; margin:.16em .1em 0 0; color:var(--accent); }
+.empty-icon,.confirm-icon { width:34px; height:34px; margin:0 auto 15px; border:1.5px solid var(--gold); border-radius:50%; position:relative; }.empty-icon::after,.confirm-icon::after { content:""; position:absolute; inset:8px; border:1px solid var(--gold); border-radius:50%; }.confirm-icon { border-color:var(--danger); }.confirm-icon::after { border-color:var(--danger); }
+
+.cursor-blob { display:none; } @media (hover:hover) and (pointer:fine) { .custom-cursor,.custom-cursor * { cursor:none !important; }.cursor-blob { display:block; position:fixed; z-index:100; width:16px; height:16px; left:0; top:0; pointer-events:none; border:1px solid color-mix(in srgb, var(--accent) 75%, white); border-radius:50%; background:var(--accent); transform:translate(-50%,-50%) scale(.55); opacity:0; box-shadow:0 3px 12px color-mix(in srgb, var(--accent) 25%, transparent); transition:width .2s ease,height .2s ease,transform .2s ease,opacity .2s ease,background .2s ease,border-color .2s ease; }.cursor-blob.is-visible { opacity:.78; transform:translate(-50%,-50%) scale(1); }.cursor-blob.is-active { width:30px; height:30px; background:var(--gold); border-color:color-mix(in srgb, var(--gold) 75%, white); transform:translate(-50%,-50%) scale(1); }.custom-cursor[data-theme="dark"] .cursor-blob { box-shadow:0 3px 16px rgba(185,161,227,.35); } }
+
+@media (max-width:1000px) { .orbital-atmosphere { right:-95px; opacity:.48; } }
+@media (max-width:620px) { .orbital-atmosphere { top:190px; right:-125px; transform:scale(.75); transform-origin:top right; } }
+@media (prefers-reduced-motion:reduce) { .orbit { animation:none; } .cursor-blob { transition:none; } }

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Scribe — Your Journal{% endblock %}
+{% block content %}
+<section class="journal-intro">
+  <p class="eyebrow">Your private collection</p>
+  <div class="intro-row"><div><h1>My journal</h1><p class="muted">A quiet place for the things worth keeping.</p></div><a class="button desktop-create" href="{% url 'notes:create' %}">Write a note <span aria-hidden="true">＋</span></a></div>
+</section>
+<form class="search-form" method="get" role="search">
+  <label class="sr-only" for="note-search">Search your notes</label>
+  <span class="search-icon" aria-hidden="true">⌕</span>
+  <input id="note-search" name="q" value="{{ query }}" placeholder="Search your journal…" autocomplete="off">
+  {% if query %}<a class="clear-search" href="{% url 'notes:list' %}" aria-label="Clear search">×</a>{% endif %}
+</form>
+{% if notes %}
+  <p class="notes-count">{{ notes|length }} note{{ notes|length|pluralize }}{% if query %} found for “{{ query }}”{% endif %}</p>
+  <section class="notes-grid" aria-label="Your notes">
+    {% for note in notes %}
+      <article class="note-card"><div class="note-card-accent"></div><a class="note-card-link" href="{{ note.get_absolute_url }}"><p class="note-date">{{ note.updated_at|date:"M j, Y" }}</p><h2>{{ note.title }}</h2><p class="note-preview">{{ note.content|truncatechars:155 }}</p><span class="read-note">Open note <span aria-hidden="true">→</span></span></a></article>
+    {% endfor %}
+  </section>
+{% else %}
+  <section class="empty-state">
+    <span class="empty-icon" aria-hidden="true"></span>
+    {% if query %}<h2>No notes found</h2><p>Try another word, or return to all your pages.</p><a class="text-link" href="{% url 'notes:list' %}">View all notes</a>{% else %}<h2>Your journal is waiting</h2><p>The first page is often the hardest—and the most rewarding.</p><a class="button" href="{% url 'notes:create' %}">Write your first note</a>{% endif %}
+  </section>
+{% endif %}
+{% endblock %}

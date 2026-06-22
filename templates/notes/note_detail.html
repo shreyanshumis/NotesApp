@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ note.title }} — Scribe{% endblock %}
+{% block content %}
+<article class="note-detail">
+  <a class="back-link" href="{% url 'notes:list' %}">← Back to journal</a>
+  <header class="detail-header"><p class="note-date">{% if note.updated_at != note.created_at %}Updated {% endif %}{{ note.updated_at|date:"F j, Y" }}</p><h1>{{ note.title }}</h1></header>
+  <div class="detail-content">{{ note.content|linebreaks }}</div>
+  <footer class="detail-actions">
+    <details class="file-menu">
+      <summary class="button button-secondary">Share note</summary>
+      <div class="file-options">
+        <a href="{% url 'notes:share-image' note.pk %}" data-share-file data-file-name="{{ note.title }}.png" data-file-type="image/png">Share as image</a>
+        <a href="{% url 'notes:share-pdf' note.pk %}" data-share-file data-file-name="{{ note.title }}.pdf" data-file-type="application/pdf">Share as PDF</a>
+      </div>
+    </details>
+    <details class="file-menu">
+      <summary class="button button-secondary">Export note</summary>
+      <div class="file-options">
+        <a href="{% url 'notes:share-image' note.pk %}" download>Export as image</a>
+        <a href="{% url 'notes:share-pdf' note.pk %}" download>Export as PDF</a>
+      </div>
+    </details>
+    <a class="button button-secondary" href="{% url 'notes:edit' note.pk %}">Edit note</a><a class="button button-danger" href="{% url 'notes:delete' note.pk %}">Delete</a>
+  </footer>
+</article>
+{% endblock %}

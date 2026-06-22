@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Delete {{ note.title }} — Scribe{% endblock %}
+{% block content %}
+<section class="confirm-shell"><span class="confirm-icon" aria-hidden="true"></span><p class="eyebrow">A gentle pause</p><h1>Delete this note?</h1><p>“{{ note.title }}” will be removed from your journal forever.</p><form method="post">{% csrf_token %}<div class="form-actions"><a class="button button-secondary" href="{{ note.get_absolute_url }}">Keep note</a><button class="button button-danger" type="submit">Delete note</button></div></form></section>
+{% endblock %}
