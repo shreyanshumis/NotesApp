@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Continue with Google — Scribe{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+  <form class="auth-card" method="post">
+    {% csrf_token %}
+    <p class="eyebrow">Google SSO</p>
+    <h1>Continue to Google?</h1>
+    <p class="muted">You’re about to sign in using Google. After that, Scribe will show only the notes owned by your account.</p>
+    <button class="button google-login-button" type="submit">
+      <span class="google-mark" aria-hidden="true">G</span>
+      Continue
+    </button>
+  </form>
+</section>
+{% endblock %}

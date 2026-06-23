@@ -24,7 +24,13 @@
       <a class="brand" href="{% url 'notes:list' %}" aria-label="Scribe home"><span class="brand-mark" aria-hidden="true"></span> Scribe</a>
       <div class="nav-actions">
         <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
-        <a class="button button-small" href="{% url 'notes:create' %}">New note <span aria-hidden="true">＋</span></a>
+        {% if request.user.is_authenticated %}
+          <span class="signed-in-pill">Signed in as {{ request.user.get_short_name|default:request.user.username }}</span>
+          <a class="text-link nav-link" href="{% url 'account_logout' %}">Log out</a>
+          <a class="button button-small" href="{% url 'notes:create' %}">New note <span aria-hidden="true">＋</span></a>
+        {% else %}
+          <a class="button button-small" href="{% url 'account_login' %}">Log in</a>
+        {% endif %}
       </div>
     </nav>
   </header>

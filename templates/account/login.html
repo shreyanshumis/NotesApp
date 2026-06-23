@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+
+{% block title %}Log in — Scribe{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+  <div class="auth-card">
+    <p class="eyebrow">Private by account</p>
+    <h1>Enter your journal</h1>
+    <p class="muted">Sign in with Google so every note you create, edit, export, or share stays scoped to your own account.</p>
+    {% if google_sso_configured %}
+      <a class="button google-login-button" href="{% provider_login_url 'google' process='login' %}">
+        <span class="google-mark" aria-hidden="true">G</span>
+        Continue with Google
+      </a>
+      <p class="auth-note">Use the same Google account each time to see the same private note collection.</p>
+    {% else %}
+      <div class="sso-setup-note">
+        <strong>Google SSO is wired in, but credentials are not set yet.</strong>
+        <span>Add <code>GOOGLE_OAUTH_CLIENT_ID</code> and <code>GOOGLE_OAUTH_CLIENT_SECRET</code>, or create a Google SocialApp in Django admin.</span>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
