@@ -9,6 +9,7 @@ services:
     name: scribe-notes
     runtime: python
     plan: free
+    healthCheckPath: /healthz/
     buildCommand: bash ./build.sh
     startCommand: python -m gunicorn journal.asgi:application -k uvicorn.workers.UvicornWorker
     envVars:
@@ -20,6 +21,8 @@ services:
         generateValue: true
       - key: DEBUG
         value: "False"
+      - key: RENDER
+        value: "true"
       - key: WEB_CONCURRENCY
         value: 4
       - key: GOOGLE_OAUTH_CLIENT_ID
