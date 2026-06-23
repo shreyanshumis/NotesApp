@@ -1,8 +1,20 @@
 /* A quiet celestial layer: visible enough to enrich the page, never enough to compete with a note. */
-:root { --ambient:#eee9e5; --ambient-line:#ded5cf; }
-:root[data-theme="dark"] { --ambient:#1b1818; --ambient-line:#302b2b; }
+:root { --ambient:#eee9e5; --ambient-line:#ded5cf; --ambient-glow:rgba(184,155,94,.13); --ambient-purple:rgba(110,90,138,.11); --ink-speck:rgba(110,90,138,.18); }
+:root[data-theme="dark"] { --ambient:#1b1818; --ambient-line:#302b2b; --ambient-glow:rgba(184,155,94,.12); --ambient-purple:rgba(185,161,227,.09); --ink-speck:rgba(185,161,227,.18); }
 
 .site-header,.page-content,.site-footer { position:relative; z-index:1; }
+.paper-atmosphere { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; opacity:.9; }
+.paper-atmosphere::before { content:""; position:absolute; inset:0; background-image:radial-gradient(circle at 12% 18%, color-mix(in srgb,var(--gold) 10%,transparent) 0 1px, transparent 1px), radial-gradient(circle at 84% 72%, color-mix(in srgb,var(--accent) 9%,transparent) 0 1px, transparent 1px); background-size:82px 82px, 118px 118px; opacity:.38; animation:paper-grain-drift 34s linear infinite; }
+.paper-glow { position:absolute; width:440px; height:440px; border-radius:50%; filter:blur(2px); opacity:.74; animation:glow-breathe 13s ease-in-out infinite; }
+.paper-glow-one { left:-170px; top:95px; background:radial-gradient(circle, var(--ambient-glow), transparent 66%); }
+.paper-glow-two { right:-190px; bottom:40px; background:radial-gradient(circle, var(--ambient-purple), transparent 68%); animation-delay:-5s; }
+.script-line { position:absolute; height:1px; border-radius:999px; background:linear-gradient(90deg, transparent, var(--ambient-line), transparent); opacity:.55; transform-origin:center; animation:script-drift 18s ease-in-out infinite; }
+.script-line-one { top:33%; left:-90px; width:360px; transform:rotate(-12deg); }
+.script-line-two { right:-80px; top:61%; width:420px; transform:rotate(9deg); animation-delay:-7s; }
+.ink-float { position:absolute; border-radius:50%; background:var(--ink-speck); box-shadow:0 0 0 8px color-mix(in srgb,var(--ink-speck) 22%, transparent); animation:ink-float 16s ease-in-out infinite; }
+.ink-float-one { width:10px; height:10px; left:8%; bottom:18%; }
+.ink-float-two { width:7px; height:7px; right:22%; top:24%; animation-duration:19s; animation-delay:-4s; }
+.ink-float-three { width:5px; height:5px; left:58%; bottom:12%; animation-duration:22s; animation-delay:-9s; }
 .orbital-atmosphere { position:fixed; z-index:0; top:145px; right:max(2.5vw, 24px); width:270px; height:270px; pointer-events:none; opacity:.72; }
 .orbital-atmosphere::before { content:""; position:absolute; inset:28px; border-radius:50%; background:var(--ambient); filter:blur(.2px); }
 .orbital-core { position:absolute; z-index:2; top:calc(50% - 11px); left:calc(50% - 11px); width:22px; height:22px; border:5px solid var(--gold); border-radius:50%; background:var(--ambient); box-shadow:0 0 0 8px color-mix(in srgb, var(--ambient) 82%, transparent); }
@@ -17,9 +29,26 @@
 .brand-mark { display:inline-block; width:13px; height:13px; margin:0 7px 0 1px; border:2px solid var(--gold); border-radius:50%; vertical-align:1px; position:relative; }.brand-mark::after { content:""; position:absolute; top:3px; left:3px; width:3px; height:3px; border-radius:50%; background:var(--gold); }
 .brand,.journal-intro h1,.page-heading h1,.detail-header h1,.confirm-shell h1,.note-card h2 { font-family:'Playfair Display',serif; font-style:italic; }.journal-intro .muted,.empty-state p,.confirm-shell>p:not(.eyebrow),.note-preview { font-family:'Playfair Display',serif; font-style:italic; font-size:1.08rem; }.note-detail .detail-content > p:first-child::first-letter { font-family:'Playfair Display',serif; font-size:2.7em; font-style:italic; line-height:.75; float:left; margin:.16em .1em 0 0; color:var(--accent); }
 .empty-icon,.confirm-icon { width:34px; height:34px; margin:0 auto 15px; border:1.5px solid var(--gold); border-radius:50%; position:relative; }.empty-icon::after,.confirm-icon::after { content:""; position:absolute; inset:8px; border:1px solid var(--gold); border-radius:50%; }.confirm-icon { border-color:var(--danger); }.confirm-icon::after { border-color:var(--danger); }
+.journal-intro,.notes-grid,.note-detail,.auth-card,.editor-shell,.confirm-shell { position:relative; }
+.journal-intro::before { content:""; position:absolute; z-index:-1; width:190px; height:190px; left:-84px; top:-46px; border-radius:50%; border:1px solid var(--ambient-line); opacity:.5; animation:quiet-turn 24s linear infinite; }
+.journal-intro::after { content:""; position:absolute; z-index:-1; width:260px; height:12px; left:24px; bottom:-22px; border-radius:999px; background:linear-gradient(90deg, transparent, color-mix(in srgb,var(--gold) 25%, transparent), transparent); opacity:.62; animation:ribbon-breathe 9s ease-in-out infinite; }
+.notes-grid::before,.note-detail::before,.auth-card::before,.editor-shell::before { content:""; position:absolute; z-index:-1; border-radius:50%; border:1px solid var(--ambient-line); opacity:.32; animation:quiet-turn 30s linear infinite reverse; }
+.notes-grid::before { width:210px; height:210px; right:-72px; top:-45px; }
+.note-detail::before { width:260px; height:260px; left:-115px; top:36px; }
+.auth-card::before { width:170px; height:170px; right:-58px; top:-58px; }
+.editor-shell::before { width:220px; height:220px; right:-88px; top:16px; }
+.note-card::after { content:""; position:absolute; inset:-45% -18%; background:linear-gradient(115deg, transparent 35%, color-mix(in srgb,var(--gold) 10%, transparent), transparent 63%); opacity:0; transform:translateX(-34%); transition:opacity .25s ease; pointer-events:none; }
+.note-card:hover::after { opacity:1; animation:card-sheen 1.25s ease; }
 
 .cursor-blob { display:none; } @media (hover:hover) and (pointer:fine) { .custom-cursor,.custom-cursor * { cursor:none !important; }.cursor-blob { display:block; position:fixed; z-index:100; width:16px; height:16px; left:0; top:0; pointer-events:none; border:1px solid color-mix(in srgb, var(--accent) 75%, white); border-radius:50%; background:var(--accent); transform:translate(-50%,-50%) scale(.55); opacity:0; box-shadow:0 3px 12px color-mix(in srgb, var(--accent) 25%, transparent); transition:width .2s ease,height .2s ease,transform .2s ease,opacity .2s ease,background .2s ease,border-color .2s ease; }.cursor-blob.is-visible { opacity:.78; transform:translate(-50%,-50%) scale(1); }.cursor-blob.is-active { width:30px; height:30px; background:var(--gold); border-color:color-mix(in srgb, var(--gold) 75%, white); transform:translate(-50%,-50%) scale(1); }.custom-cursor[data-theme="dark"] .cursor-blob { box-shadow:0 3px 16px rgba(185,161,227,.35); } }
 
 @media (max-width:1000px) { .orbital-atmosphere { right:-95px; opacity:.48; } }
 @media (max-width:620px) { .orbital-atmosphere { top:190px; right:-125px; transform:scale(.75); transform-origin:top right; } }
-@media (prefers-reduced-motion:reduce) { .orbit { animation:none; } .cursor-blob { transition:none; } }
+@keyframes paper-grain-drift { from { transform:translate3d(0,0,0); } to { transform:translate3d(-82px,82px,0); } }
+@keyframes glow-breathe { 0%,100% { transform:scale(1); opacity:.52; } 50% { transform:scale(1.09); opacity:.82; } }
+@keyframes script-drift { 0%,100% { opacity:.28; translate:0 0; } 50% { opacity:.68; translate:26px -10px; } }
+@keyframes ink-float { 0%,100% { transform:translate3d(0,0,0) scale(1); opacity:.42; } 50% { transform:translate3d(18px,-28px,0) scale(1.18); opacity:.74; } }
+@keyframes quiet-turn { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+@keyframes ribbon-breathe { 0%,100% { transform:scaleX(.78); opacity:.28; } 50% { transform:scaleX(1); opacity:.68; } }
+@keyframes card-sheen { from { transform:translateX(-42%); } to { transform:translateX(42%); } }
+@media (prefers-reduced-motion:reduce) { .orbit,.paper-atmosphere::before,.paper-glow,.script-line,.ink-float,.journal-intro::before,.journal-intro::after,.notes-grid::before,.note-detail::before,.auth-card::before,.editor-shell::before,.note-card:hover::after { animation:none; } .cursor-blob { transition:none; } }
