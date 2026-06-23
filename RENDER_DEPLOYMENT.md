@@ -20,3 +20,8 @@ Required Render environment variables:
 The build script installs dependencies, collects static files, and runs migrations.
 
 Health checks use `/healthz/`.
+
+If you created the Render web service manually instead of from `render.yaml`, add `SECRET_KEY` yourself in Render:
+
+- Key: `SECRET_KEY`
+- Value: generate a long random value, for example with `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`

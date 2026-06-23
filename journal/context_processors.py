@@ -1,3 +1,5 @@
+import os
+
 from django.conf import settings
 
 
@@ -15,4 +17,7 @@ def google_sso_status(request):
         except Exception:
             configured = False
 
-    return {"google_sso_configured": configured}
+    return {
+        "google_sso_configured": configured,
+        "scribe_build_commit": os.environ.get("RENDER_GIT_COMMIT", "local")[:7],
+    }
